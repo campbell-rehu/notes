@@ -80,7 +80,7 @@
 - Then have a security group on the application which only accepts requests from the load balancer
   - Enhanced security mechanism
 
-### Application Load Balancer
+#### Application Load Balancer
 
 - Layer 7 only (HTTP)
 - Route to multiple HTTP applications across machines (target groups)
@@ -88,7 +88,7 @@
 - Support for HTTP/2 and Websockets
 - Support redirects
 - Support routing tables
-  - Routing based on path in URL
+  - Routing based on path in URL e.g. /user and /search can sit behind the same ALB
   - Routing based on hostname in URL
   - Routing based on Query String, Headers
 - ALB great for microservices and container-based application
@@ -96,9 +96,46 @@
 
 #### ALB Target Groups
 
-- EC2 instances
-- ECS tasks
-- Lambda functions
-- IP addresses (must be private IPs)
+- Can be EC2 instances
+- Can be ECS tasks
+- Can be Lambda functions
+- Can be IP addresses (must be private IPs)
 - ALB can route to multiple target groups
 - Health checks are at the target group level
+
+#### Network Load Balancer
+
+- Layer 4 load balancer
+- Forward TCP & UDP traffic
+- Less latency (~100ms vs 400ms for ALB)
+- one static IP per AZ
+- used for extreme performance, TCP or UDP traffic
+- not included in free tier
+
+#### NLB Target Groups
+
+- Can be EC2 instances
+- Can be IP addresses (must be private IPs)
+- Can be ALB
+- Health checks support TCP, HTTP and HTTPS
+
+#### Gateway Load Balancer
+
+- Operates at Layer 3 (Network layer) - IP Packets
+- Transparent network gateway
+  - single entry/exit for all traffic
+- Load Balancer
+  - distributes traffic to your virtual applicances
+- Uses the GENEVE protocol on port 6081
+- Example use-cases:
+  - Firewalls
+  - Intrusion detection and prevention systems
+  - Deep packet inspection systems
+  - Payload manipulation
+
+#### GLB Target Groups
+
+- EC2 instances
+- IP Addresses
+
+### Sticket Sessions (Session affinity)
