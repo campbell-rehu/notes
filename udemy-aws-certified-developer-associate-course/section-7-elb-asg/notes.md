@@ -159,3 +159,70 @@
     - Cookie name is AWSALB for ALB, AWSELB for CLB
 
 ## Cross-Zone Load Balancing
+
+- distributes incoming traffic across ALL instances in ALL AZs
+- ALB
+  - enabled by default
+  - no charges for inter-AZ data
+- NLB / GLB
+  - disabled by default
+  - pay charges for inter-AZ data if enabled
+
+## SSL / TLS Certificates
+
+- Allows traffic between client and load balancer to be encrypted in transit (in-flight encryption)
+- SSL = Secure Sockets Layer
+- TLS = Transport Layer Security (newer version)
+- Public SSL certs are issued by Certificate Authorities (CA)
+- SSL certs have expiration date and must be renewed regularly
+- Load balancer uses an X.509 cert
+- Can manage certs using ACM (AWS Certificate Manager)
+- Can upload your own certificates
+- HTTPS listener:
+  - must specify a default certificate
+  - Add an optional list of certs to support multiple domains
+  - Clients can use SNI (Server Name Indication) to specify the hostname they reach
+
+### Server Name Indication (SNI)
+
+- SNI solves the problem of loading multiple SSL certs onto one web server (to serve multiple websites)
+- Requires the client to indicate the hostname of the target server in the initial SSL handshake
+- Server will then find the correct cert or return the default one
+- Only works for ALB, NLB, Cloudfront
+
+## Connection Draining
+
+- Deregistration Delay (ALB and NLB)
+- Connection Draining (CLB)
+- Gives time to complete in-flight requests while the instance is de-registering or unhealthy
+- Stops sending new requests to the EC2 instance which is de-registering
+- Between 1 to 3600 seconds (default: 300 seconds)
+- Can be disabled (set value to 0)
+- Set to a low value if your requests are short 
+
+## Auto Scaling Group (ASG)
+
+- Scale out (add EC2 instances) to match an increased load
+- Scale in (remove EC2 instances) to match a decreased load
+- Ensure we have a min and max number of EC2 instances
+
+### Auto Scaling Group Attributes
+
+- A Launch Template
+  - AMI + Instance Type
+  - EC2 User Data
+  - EBS Volumes
+  - Security Groups
+  - SSH Key Pair
+  - IAM Roles for your EC2 instances
+  - Network + Subnets information
+  - Load Balancer Information
+- Min / Max / Initial Capacity
+- Scaling policies
+
+### CloudWatch Alarms and Scaling
+
+- Scale an ASG in/out based on CloudWatch alarms
+- Alarm monitors a metric (such as Average CPU or a custom metric)
+- Auto scaling event is triggered by alarm
+
