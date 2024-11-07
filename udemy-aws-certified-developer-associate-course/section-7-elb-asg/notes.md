@@ -138,7 +138,7 @@
 - EC2 instances
 - IP Addresses
 
-## Sticket Sessions (Session affinity)
+## Sticky Sessions (Session affinity)
 
 - Same client is always redirected to the same instance behind a load balancer
 - Available for ALB and NLB
