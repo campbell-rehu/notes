@@ -74,3 +74,28 @@
 - Data can be analysed using data analysis tools
 - The target logging bucket must be in the same AWS region
 - Do not log into the same bucket that is being monitored
+
+### S3 Pre-Signed URLs
+
+- Generate a URL that inherits the permission of the user who generated the URL
+- The URL has an expiration of between 1 minute and 12 hours via S3 Console
+- The URL has an expiration of up to 168 hours via AWS CLI
+- Can be used for private objects or objects in a private bucket
+
+### S3 Access Points
+
+- Access points simplify managing data access at scale for shared data sets on S3
+- Each access point has:
+  - its own DNS name
+  - an access point policy (similar to a bucket policy)
+- These policies act as as a proxy infront of the S3 buckets so the bucket policy doesn't need to be updated or become too complex
+
+### S3 Object Lambda
+
+- Use an AWS Lambda function to modify objects as they are being retrieved from S3
+- The bucket stores the raw data and any number of Lambda functions can be created which modify the data based on the needs of the caller
+- Use cases:
+  - Redacting personally identifiable information (PII) for analytics
+  - Converting across data formats
+  - Compressing or decompressing data
+-
