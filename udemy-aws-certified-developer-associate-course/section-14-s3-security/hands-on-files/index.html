@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch HTML Example</title>
+  </head>
+  <body>
+    <h1>Fetch HTML Example</h1>
+    <button id="fetchButton">Fetch HTML</button>
+    <div id="content"></div>
+
+    <script>
+      document
+        .getElementById("fetchButton")
+        .addEventListener("click", function () {
+          // Placeholder URL (replace with your actual URL)
+          const url =
+            "http://cr-secondary-bucket.s3-website-ap-southeast-2.amazonaws.com/";
+
+          // Make the fetch request
+          fetch(url)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.text();
+            })
+            .then((html) => {
+              // Insert the fetched HTML into the div with id="content"
+              document.getElementById("content").innerHTML = html;
+            })
+            .catch((error) => {
+              console.error(
+                "There was a problem with the fetch operation:",
+                error,
+              );
+              document.getElementById("content").innerHTML =
+                "Failed to load content.";
+            });
+        });
+    </script>
+  </body>
+</html>
