@@ -55,3 +55,19 @@
   - Can be set between 0 seconds and 365 days
   - Can be set by the origin using the Cache-Control header, Expires header
 - All HTTP Headers, cookies and query strings included in the cache key are forwarded to the origin
+
+#### Origin Request Policy
+
+- Specify HTTP Headers, Cookies and/or Query Strings without including them in the cache key
+- Gives the ability to add CloudFront and Cusom headers to the origin requests that were not included in the viewer request
+
+#### Cache Invalidations
+
+- CloudFront doesn't know about changes in the origin until after the TTL expires
+- You can force an entire or partial cache refresh by performing a CloudFront invalidation
+- You can invalidate all files or a special path
+
+#### Cache Behaviours
+
+- Different Cache behaviours for a given URL pattern
+- Route different kind of origins/origin groups based on the content type or path pattern
