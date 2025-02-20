@@ -59,7 +59,7 @@
 #### Origin Request Policy
 
 - Specify HTTP Headers, Cookies and/or Query Strings without including them in the cache key
-- Gives the ability to add CloudFront and Cusom headers to the origin requests that were not included in the viewer request
+- Gives the ability to add CloudFront and Custom headers to the origin requests that were not included in the viewer request
 
 #### Cache Invalidations
 
@@ -71,3 +71,53 @@
 
 - Different Cache behaviours for a given URL pattern
 - Route different kind of origins/origin groups based on the content type or path pattern
+
+#### CloudFront — EC2 as an Origin
+
+- EC2 instances can be used as an origin in two ways:
+  - Public EC2 instances
+    - Must have a public IP
+    - Security group must allow inbound traffic from
+  - Private EC2 instances behind a public Application Load Balancer
+    - The ALB must have a security group that allows inbound traffic from CloudFront
+    - The EC2 instances must allow the security group of the ALB
+
+### Geo Restriction
+
+- You can restrict who can access your distribution via
+  - allow list
+  - block list
+
+### CloudFront Signed URL / Cookies
+
+- Protect Cloudfront content so only users with the URL or Cookies can access the files
+- Signed URL = access to individual files (one URL)
+- Signed Cookies = access to multiple files (one cookie)
+- Process:
+  - Create a trusted key group and generate a public / private key pair
+  - The private key is used by the application to sign URLs
+  - The public key is stored in CloudFront to verify the URLs
+
+### CloudFront Advanced Topics
+
+#### Price Classes
+
+- Define the number of edge locations you want your content to be distributed to in order to balance costs and performance
+
+#### Multiple Origins
+
+- Route to different origins based on the content type
+
+#### Origin Groups
+
+- Have multiple origins to increase high-availability and provide failover
+
+#### Field-Level Encryption
+
+- Sensitive information can be encrypted at the edge using CloudFront public key
+- The data can then be decrypted by the application server using the private key
+
+### Real-time Logs
+
+- Real-time requests received by CloudFront can be sent to Kinesis Data Streams
+- Monitor, analyze and act based on performance
