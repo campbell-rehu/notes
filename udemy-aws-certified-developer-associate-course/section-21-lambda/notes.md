@@ -280,3 +280,70 @@
   - Pre-warms a set number of function instances
   - Useful for latency-sensitive applications
   - Can be used to avoid cold starts
+
+## Lambda Function Dependencies
+
+- Install the packages alongside your code and zip it together
+- If it's less than 50MB, zip it together otherwise upload it to S3 first
+
+## Lambda and CloudFormation
+
+- Inline
+- S3
+  - store the ZIP file in S3
+  - in CloudFormation, provide:
+    - S3Bucket
+    - S3Key
+    - S3ObjectVersion
+  - if one of these is not updated, CloudFormation will not update the Lambda function
+
+## Lambda Container Images
+
+- Deploy Lambda function as container images of up to 10gb from ECR
+- Pack complex dependencies, large dependencies in a container
+- Base images available for Python, Node, Java, .NET, Go, Ruby
+- Can create your own image as long as it implements the Lambda runtime API
+- Test containers locally using Lambda Runtime Interface Emulator
+- Unified workflow to build apps
+- Best practices:
+  - Use AWS-provided base images
+  - Use Multi-stage builds
+  - Build from Stable to Frequently Changing
+  - Use a Single Repository for Functions with large layers
+
+## Lambda Versions
+
+- We can create new versions of a Lambda function
+- Versions are immutable
+- Versions have increasing numbers
+- Versions get their own ARN
+- Version = code + configuration
+- Each version of the lambda function can be accessed
+
+## Lambda Aliases
+
+- "Pointers" to function versions
+- Can define aliases for different environments
+- Aliases are mutable
+- Aliases enable Canary deployment by assigning weights to lambda functions
+- Aliases enable stable configuration of our event triggers / destinations
+- Aliases have their own ARNs
+- Aliases cannot reference other aliases
+
+## Lamdba & CodeDeploy
+
+- Automate traffic shift for Lambda aliases
+- Feature is integrated within the SAM (Serverless Application Model) framework
+- Linear: grow traffic every N minutes until 100%
+- Canary: try X percent then 100%
+- AllAtOnce: immediately shift all traffic to new version
+- Can create Pre & Post Traffic hooks to check the health of the Lambda function
+
+## Function URL
+
+- Dedicated URL for a Lambda function
+- A unique URL endpoint that never changes is generated once the lambde is created
+- Invoke using any HTTP client
+- Supports resouce-based policies & CORS configurations
+- Can be applied to any function alias or to $LATEST
+- Create or configure using Console or API
