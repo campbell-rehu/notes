@@ -347,3 +347,29 @@
 - Supports resouce-based policies & CORS configurations
 - Can be applied to any function alias or to $LATEST
 - Create or configure using Console or API
+
+## CodeGuru Profiling
+
+- Insights into the runtime performance of your Lambda functions
+- Supported for Java and Python
+
+## Lambda Limits
+
+- Per region
+- Execution:
+  - Memory: 128MB to 10GB
+  - Max execution time: 15 minutes
+  - Environment variables: 4KB
+  - Disk capacity: 512MB to 10GB
+  - Concurrent executions: 1000 (can be increased by request)
+- Deployment:
+  - Lambda function deployment package size: 50MB (zipped), 250MB (unzipped)
+  - Can use /tmp directory to load other files at startup
+
+## Lambda Best Practices
+
+- Perform heavy-duty work outside of your function handler
+- Use environment variables to pass settings to your function
+- Minimize the size of your deployment package
+  - Use Lambda layers to manage your dependencies
+- Avoid using recursive functions
