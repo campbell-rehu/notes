@@ -22,7 +22,7 @@
 
 ## Endpoint Types
 
-- Edge-Optimized: for gloabl clients
+- Edge-Optimized: for global clients
   - Requests are routed through the CloudFront Edge locations
   - API Gateway still lives in only one region
 - Regional: for clients within the same region
@@ -35,4 +35,25 @@
 - User authentication through:
   - IAM Roles
   - Cognito (identity for external users)
-  - Custom Authori
+  - Custom Authorizer
+- Custom Domain Name through integration with AWS Certificate Manager (ACM)
+
+## Deployment Stages
+
+- Making changes in the API gateway does not mean they're effective
+- You need to make a "deployment" for them to be in effect
+- It's a common source of confusion
+- Changes are deployed to "Stages"
+- Use the naming you like for stages (dev, test, prod)
+- Each stage has its own configuration parameters
+- Can be rolled back because of the history of deployments
+
+## Stage variables
+
+- Like environment variables for API gateway
+- Use them to change often changing configuration values
+
+### & Lambda Aliases
+
+- Stage variable to indicate the corresponding Lambda alias
+- API gateway will automatically invoke the right lambda function
