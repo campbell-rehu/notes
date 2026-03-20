@@ -57,3 +57,35 @@
 
 - Stage variable to indicate the corresponding Lambda alias
 - API gateway will automatically invoke the right lambda function
+
+## Canary Deployment
+
+- Possibility to enable canary deployments for any stage (usually prod)
+- Choose the % of traffic the canasy channel receives
+- Metrics & Logs are separate (for better monitoring)
+- Possiblity to override stage variables for canasy
+- Blue / Green deployment with Lambda and API Gateway
+
+## Integration Types
+
+- Integration type MOCK
+  - returns a response without sending the request to the backend
+- HTTP / AWS
+  - you must configure both the integration request and integration response
+  - setup data mapping using mapping templates for the request and response
+- AWS_PROXY (Lambda Proxy)
+  - incoming request from the client is input to Lambda
+  - The funtion is responsible for the logic of request / response
+  - No mapping template
+  - Headers, query params etc are passed as arguments to Lambda
+- HTTP_PROXY
+  - No mapping template
+  - HTTP request is passed to the backend
+  - HTTP response from the backend is forwarded by API gateway
+  - Possibility to add HTTP headers if need be
+
+### Mapping Templates
+
+- Can be used to modify request / responses
+- Modify query string params, body content, headers etc
+- Uses Velocity Template Language (VTL)
